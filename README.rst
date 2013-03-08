@@ -18,8 +18,8 @@ Functionality
 -------------
 .. code:: ruby
 
-  Plugin.filtering(:usercomplete, "to", [])
-  #=> ["to", ["toshi_a", "toshi_a_kanyou"]]
+  Plugin.filtering(:user_prefix_search, "to", [])
+  #=> ["to", [User(@toshi_a), User(@toshi_a_kanyou)]]
 
 License
 -------
