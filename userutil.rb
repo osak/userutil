@@ -21,6 +21,8 @@ Plugin.create(:userutil) do
 
     Enumerator.new {|y|
       Plugin.filtering(:worlds, y)
+    }.select{|world|
+      world.respond_to?(:followings)
     }.map{|world|
       world.followings(cache: true).next { |users|
         users = users.compact
