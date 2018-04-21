@@ -16,7 +16,18 @@ Plugin.create(:userutil) do
   @user_list = []
   Delayer.new {
     Service.primary.followings(cache: true).next { |users|
-      @user_list = users.dup
+      @user_list = users.compact.dup
+    }
+
+    Enumerator.new {|y|
+      Plugin.filtering(:worlds, y)
+    }.select{|world|
+      world != Service.primary && world.respond_to?(:followings)
+    }.map{|world|
+      world.followings(cache: true).next { |users|
+        users = users.compact
+        @user_list.concat users
+      }
     }
   }
 end
